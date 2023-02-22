@@ -2,6 +2,8 @@ from flask import Flask
 from flask import jsonify
 from flask import request
 from methods import Token, Restricted
+import jwt
+from datetime import datetime
 
 app = Flask(__name__)
 login = Token()
@@ -36,7 +38,7 @@ def url_login():
 def url_protected():
     auth_token = request.headers.get('Authorization')
     res = {
-        "data": protected.access_data(auth_token)
+        "data": protected.access_data(auth_token[7:])
     }
     return jsonify(res)
 
